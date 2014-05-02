@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css"> 
+      #stop-view{
+        display: none;
+      }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+        var stretchTime;
+        var counter;
+
+        function timer(){
+          stretchTime = stretchTime - 1;
+
+          $('#countdown').text(stretchTime);
+
+          if(stretchTime === 0) {
+            clearInterval(counter);
+            $('#countdown').text("");
+
+          } 
+        } 
+
+        function toggleViews(){
+          $('#stop-view').toggle();
+          $('#start-view').toggle();
+        }
+        //
+        // Start Click Hanlder
+        //
+        $('#start').on('click', function() {
+           stretchTime = $('#stretch-time').val();
+           counter = setInterval(timer, 1000);
+           toggleViews();
+          
+        });
+
+        //
+        // Stop Click Hanlder
+        //
+        
+        $('#stop').on('click', function(){
+          clearInterval(counter);
+          toggleViews();
+          $('#countdown').text("");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="start-view">
+      <input type="text" id="stretch-time" value="7">
+      <button id="start">Start</button>    
+    </div>
+
+    <div id="stop-view">
+      <div id="countdown"></div>
+      <button id="stop">Stop</button>
+    </div>
+  </body>
+</html>
