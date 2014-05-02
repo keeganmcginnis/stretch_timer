@@ -12,6 +12,7 @@
       $(document).ready(function() {
         var stretchTime;
         var counter;
+        var changeDelay;
 
         function timer(){
           stretchTime = stretchTime - 1;
@@ -20,11 +21,23 @@
 
           if(stretchTime === 0) {
             clearInterval(counter);
-            $('#countdown').text("");
 
+            $('#countdown').text("Change");
+
+            changeDelay = $('#change-delay').val() *1000;
+
+            setTimeout(function() {
+              startCountdown();
+            }, changeDelay);
           } 
         } 
 
+        function startCountdown(){
+          stretchTime = $('#stretch-time').val();
+          $('#countdown').text(stretchTime);
+          counter = setInterval(timer, 1000);
+        };
+        
         function toggleViews(){
           $('#stop-view').toggle();
           $('#start-view').toggle();
@@ -33,10 +46,8 @@
         // Start Click Hanlder
         //
         $('#start').on('click', function() {
-           stretchTime = $('#stretch-time').val();
-           counter = setInterval(timer, 1000);
+           startCountdown();
            toggleViews();
-          
         });
 
         //
@@ -53,7 +64,10 @@
   </head>
   <body>
     <div id="start-view">
+      Stretch Time:
       <input type="text" id="stretch-time" value="7">
+      Change Delay:
+      <input type="text" id="change-delay" value="3">
       <button id="start">Start</button>    
     </div>
 
